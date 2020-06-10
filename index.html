@@ -2,20 +2,25 @@
 <html>
 
 <head>
-    <title>Chatbot</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="stylesheet.css">
+	<title>Chatbot</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link href="style.css" rel="stylesheet">
+	<script src="script.js" defer>
+
+	</script>
 </head>
 
 <body>
-    <h1>Chatbot</h1>
+	<h1>Chatbot</h1>
 
-    <p>Type one of the following: how are you, what time is it, do a square root, tell a joke</p>
-    <input id="message" type="text" placeholder="message" />
-    <button id="send">Send</button>
-    <div id="messages"></div>
+	<p>
+		Type one of the following: how are you, tell a joke, do a square root
+	</p>
 
-    <script src="script.js"></script>
+	<input type="text" placeholder="message" autocomplete="off" id="message">
+  <button id="sendButton">Send</button>
+  <p id="you"></p>
+  <p id="bot"></p>
 </body>
 
 </html>

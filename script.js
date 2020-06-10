@@ -1,123 +1,67 @@
-var messageInput = document.getElementById("message");
-var sendButton = document.getElementById("send");
-var messagesContainer = document.getElementById("messages");
+let message = document.getElementById(`message`)
+let sendButton = document.getElementById(`sendButton`)
+let you = document.getElementById(`you`)
+let bot = document.getElementById(`bot`)
 
-var numberMode = false;
-var jokeMode = false;
+let jokeMode = false
+let squareRootMode = false
 
-messageInput.addEventListener("keydown", keyPressed);
-sendButton.addEventListener("click", send);
-messageInput.focus();
+sendButton.addEventListener(`click`, send)
 
-function keyPressed(event) {
-    if (event.keyCode == 13) {
-        send();
-    }
-}
+message.addEventListener(`keydown`, keyPressed)
+message.focus()
 
 function send() {
-    var message = messageInput.value.trim();
+  let messageValue = message.value.trim()
 
-    if (message != "") {
-        var messageDiv = document.createElement("div");
-        messageDiv.innerHTML = "<strong>You</strong>: " + message;
-        messagesContainer.insertBefore(messageDiv, messagesContainer.children[0]);
+  if (messageValue != ``) {
+    you.innerHTML = `<strong>You:</strong> ${messageValue}`
 
-        if (!numberMode) {
-            message = cleanMessage(message);
-        }
+    if (jokeMode) {
+      if (messageValue.toLowerCase() == `two kilo mockingbird`) {
+        bot.innerHTML = `<strong>Bot:</strong> you must have heard this joke before`
+      }
+      else {
+        bot.innerHTML = `<strong>Bot:</strong> two kilo mockingbird`
+      }
 
-        var response = null;
-
-        if (numberMode) {
-            response = processNumber(message);
-        }
-        else if (jokeMode) {
-            response = processJokeAnswer(message);
-        }
-        else {
-            response = processMessage(message);
-        }
-
-        if (response) {
-            setTimeout(showResponse, 400, response);
-        }
-
-        messageInput.value = "";
-        messageInput.focus();
+      jokeMode = false
     }
-}
+    else if (squareRootMode) {
+      let squareRoot = Math.sqrt(messageValue)
 
-function cleanMessage(message) {
-    return message.toLowerCase().replace(/[^a-z0-9 ]/g, "");
-}
-
-function showResponse(response) {
-    var responseDiv = document.createElement("div");
-    responseDiv.innerHTML = "<strong>Bot</strong>: " + response;
-    messagesContainer.insertBefore(responseDiv, messagesContainer.children[0]);
-}
-
-function processMessage(message) {
-    if (message == "how are you") {
-        var possibleResponses = ["I'm doing great.", "I'm fine.", "I'm okay."];
-
-        return possibleResponses[Math.floor(Math.random() * possibleResponses.length)];
-    }
-    else if (message == "what time is it") {
-        var now = new Date();
-        var hours = now.getHours();
-        var minutes = now.getMinutes();
-        var amPm = "AM";
-
-        if (hours >= 12) {
-            hours = hours - 12;
-            amPm = "PM";
-        }
-
-        if (hours == 0) {
-            hours = 12;
-        }
-
-        if (minutes < 10) {
-            minutes = "0" + minutes;
-        }
-
-        return "The time is " + hours + ":" + minutes + " " + amPm + ".";
-    }
-    else if (message == "do a square root") {
-        numberMode = true;
-
-        return "Please type a number.";
-    }
-    else if (message == "tell a joke") {
-        jokeMode = true;
-
-        return "What do you call 2000 mockingbirds?";
+      if (isNaN(squareRoot)) {
+        bot.innerHTML = `<strong>Bot:</strong> please type a number`
+      }
+      else {
+        bot.innerHTML = `<strong>Bot:</strong> the square root of ${messageValue} is ${squareRoot}`
+        squareRootMode = false
+      }
     }
     else {
-        return null;
+      if (messageValue.toLowerCase() == `how are you`) {
+        bot.innerHTML = `<strong>Bot:</strong> I'm doing great`
+      }
+      else if (messageValue.toLowerCase() == `tell a joke`) {
+        bot.innerHTML = `<strong>Bot:</strong> what do you call 2000 mockingbirds?`
+        jokeMode = true
+      }
+      else if (messageValue.toLowerCase() == `do a square root`) {
+        bot.innerHTML = `<strong>Bot:</strong> please type a number`
+        squareRootMode = true
+      }
+      else {
+        bot.innerHTML = `<strong>Bot:</strong> I don't understand`
+      }
     }
+
+    message.value = ``
+    message.focus()
+  }
 }
 
-function processNumber(message) {
-    if (isNaN(message)) {
-        return "Please type a number.";
-    }
-    else {
-        numberMode = false;
-
-        return "The square root of " + message + " is " + Math.sqrt(message) + ".";
-    }
-}
-
-function processJokeAnswer(message) {
-    jokeMode = false;
-
-    if (message == "two kilo mockingbird" || message == "2 kilo mockingbird") {
-        return "That is correct.";
-    }
-    else {
-        return "Two kilo mockingbird.";
-    }
+function keyPressed(event) {
+  if (event.keyCode == 13) {
+    send()
+  }
 }
