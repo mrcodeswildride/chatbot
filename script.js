@@ -50,6 +50,9 @@ function send() {
         bot.innerHTML = `<strong>Bot:</strong> please type a number`
         squareRootMode = true
       }
+      else if (messageValue.toLowerCase() == `xyzzy`) {
+        bot.innerHTML = `<strong>Bot:</strong> nothing happens`
+      }
       else {
         bot.innerHTML = `<strong>Bot:</strong> I don't understand`
       }
