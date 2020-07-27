@@ -57,10 +57,10 @@ function send() {
         bot.innerHTML = `<strong>Bot:</strong> I don't understand`
       }
     }
-
-    message.value = ``
-    message.focus()
   }
+
+  message.value = ``
+  message.focus()
 }
 
 function keyPressed(event) {
